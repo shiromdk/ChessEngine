@@ -96,6 +96,41 @@ U64 Bitboard::maskPawnAttacks(int square, int side) {
 
     return attacks;
 }
+
+U64 Bitboard::maskKingAttacks(int square) {
+    U64 attacks = 0ULL;
+    U64 pieceBitboard = 0ULL;
+    set_bit(pieceBitboard, square);
+    if(pieceBitboard >> 8) {
+        attacks |= (pieceBitboard >> 8);
+    }
+    if((pieceBitboard >> 9 )& notHFile) {
+        attacks |= (pieceBitboard >> 9);
+    }
+    if((pieceBitboard >> 7 )& notAFile) {
+        attacks |= (pieceBitboard >> 7);
+    }
+    if((pieceBitboard >> 1 )& notHFile) {
+        attacks |= (pieceBitboard >> 1);
+    }
+
+    if(pieceBitboard << 8) {
+        attacks |= (pieceBitboard << 8);
+    }
+    if((pieceBitboard << 9 )& notAFile) {
+        attacks |= (pieceBitboard << 9);
+    }
+    if((pieceBitboard << 7 )& notHFile) {
+        attacks |= (pieceBitboard << 7);
+    }
+    if((pieceBitboard << 1 )& notAFile) {
+        attacks |= (pieceBitboard << 1);
+    }
+
+    return attacks;
+}
+
+
 U64 Bitboard::maskKnightAttacks(int square) {
     U64 attacks = 0ULL;
     U64 pieceBitboard = 0ULL;
@@ -138,9 +173,136 @@ void Bitboard::initLeaperAttacks() {
         // Init pawn attacks
         this->pawnAttacks[white][square] = maskPawnAttacks(square,white);
         this->pawnAttacks[black][square] = maskPawnAttacks(square, black);
+        this->kingAttacks[square] = maskKingAttacks(square);
         this->knightAttacks[square] = maskKnightAttacks(square);
     }
 
+}
+
+U64 Bitboard::maskBishopAttacks(int square) {
+    U64 attacks = 0ULL;
+    // init rank and files
+    int rank, file;
+    // init target rank and files
+    int targetRank = square / 8;
+    int targetFile = square % 8;
+
+    // mask relevant bishop occupancy bits
+    for(rank = targetRank + 1, file = targetFile + 1; rank<= 6 && file <=6; rank++, file++){
+        attacks |= (1ULL << (rank*8+file));
+    }
+    for(rank = targetRank - 1, file = targetFile + 1; rank>= 1 && file <=6; rank--, file++){
+        attacks |= (1ULL << (rank*8+file));
+    }
+
+    for(rank = targetRank + 1, file = targetFile - 1; rank<= 6 && file >= 1; rank++, file--){
+        attacks |= (1ULL << (rank*8+file));
+    }
+
+    for(rank = targetRank -1, file = targetFile - 1; rank>= 1 && file >= 1; rank--, file--){
+        attacks |= (1ULL << (rank*8+file));
+    }
+    return attacks;
+}
+
+U64 Bitboard::maskRookAttacks(int square) {
+    U64 attacks = 0ULL;
+    // init rank and files
+    int rank, file;
+    // init target rank and files
+    int targetRank = square / 8;
+    int targetFile = square % 8;
+    // mask relevant rook occupancy bits
+    for(rank = targetRank + 1; rank<= 6; rank++){
+        attacks |= (1ULL << (rank*8+targetFile));
+    }
+    for(rank = targetRank -1; rank>= 1; rank--){
+        attacks |= (1ULL << (rank*8+targetFile));
+    }
+    for(file = targetFile + 1; file <= 6; file++){
+        attacks |= (1ULL << (targetRank*8+file));
+    }
+    for(file = targetFile - 1; file >= 1; file--){
+        attacks |= (1ULL << (targetRank*8+file));
+    }
+    return attacks;
+}
+
+U64 Bitboard::generateBishopAttacksOnTheFly(int square, U64 block) {
+    U64 attacks = 0ULL;
+    // init rank and files
+    int rank, file;
+    // init target rank and files
+    int targetRank = square / 8;
+    int targetFile = square % 8;
+
+    // generate bishop attacks
+    for(rank = targetRank + 1, file = targetFile + 1; rank<= 7 && file <=7; rank++, file++){
+        attacks |= (1ULL << (rank*8+file));
+        if( (1ULL << (rank*8+file) & block)){
+            break;
+        }
+    }
+    for(rank = targetRank - 1, file = targetFile + 1; rank>= 0 && file <=7; rank--, file++){
+        attacks |= (1ULL << (rank*8+file));
+        if( (1ULL << (rank*8+file) & block)){
+            break;
+        }
+    }
+
+    for(rank = targetRank + 1, file = targetFile - 1; rank<= 7 && file >= 0; rank++, file--){
+        attacks |= (1ULL << (rank*8+file));
+        if( (1ULL << (rank*8+file) & block)){
+            break;
+        }
+    }
+
+    for(rank = targetRank -1, file = targetFile - 1; rank>= 0 && file >= 0; rank--, file--){
+        attacks |= (1ULL << (rank*8+file));
+        if( (1ULL << (rank*8+file) & block)){
+            break;
+        }
+    }
+    return attacks;
+}
+
+U64 Bitboard::returnBitboard() {
+    return this->bitboard;
+}
+
+U64 Bitboard::generateRookAttacksOnTheFly(int square, U64 block) {
+    U64 attacks = 0ULL;
+    // init rank and files
+    int rank, file;
+    // init target rank and files
+    int targetRank = square / 8;
+    int targetFile = square % 8;
+    // mask relevant rook occupancy bits
+    for(rank = targetRank + 1; rank<= 7; rank++){
+        attacks |= (1ULL << (rank*8+targetFile));
+        if( (1ULL << (rank*8+targetFile) & block)){
+            break;
+        }
+    }
+    for(rank = targetRank -1; rank>= 0; rank--){
+        attacks |= (1ULL << (rank*8+targetFile));
+        if( (1ULL << (rank*8+targetFile) & block)){
+            break;
+        }
+    }
+    for(file = targetFile + 1; file <= 7; file++){
+        attacks |= (1ULL << (targetRank*8+file));
+        if((1ULL << (targetRank*8+file) & block)){
+            break;
+        }
+    }
+    for(file = targetFile - 1; file >= 0; file--){
+        attacks |= (1ULL << (targetRank*8+file));
+        if( (1ULL << (targetRank*8+file) & block)){
+            break;
+        }
+    }
+    return attacks;
 }
 
 
