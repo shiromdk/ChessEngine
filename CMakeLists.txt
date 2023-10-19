@@ -4,7 +4,10 @@ project(ChessEngine)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(ChessEngine main.cpp
-        bitboard.cpp
-        bitboard.h
-        squares.h
-        helper.h)
+        src/bitboard.cpp
+        src/bitboard.h
+        src/squares.h
+        src/helper.h
+        src/prng.cpp
+        src/prng.h
+        src/helper.cpp)

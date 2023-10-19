@@ -55,11 +55,23 @@ build CMakeFiles/ChessEngine.dir/main.cpp.obj: CXX_COMPILER__ChessEngine_unscann
   OBJECT_DIR = CMakeFiles\ChessEngine.dir
   OBJECT_FILE_DIR = CMakeFiles\ChessEngine.dir
 
-build CMakeFiles/ChessEngine.dir/bitboard.cpp.obj: CXX_COMPILER__ChessEngine_unscanned_Debug V$:/ChessEngine/bitboard.cpp || cmake_object_order_depends_target_ChessEngine
-  DEP_FILE = CMakeFiles\ChessEngine.dir\bitboard.cpp.obj.d
+build CMakeFiles/ChessEngine.dir/src/bitboard.cpp.obj: CXX_COMPILER__ChessEngine_unscanned_Debug V$:/ChessEngine/src/bitboard.cpp || cmake_object_order_depends_target_ChessEngine
+  DEP_FILE = CMakeFiles\ChessEngine.dir\src\bitboard.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\ChessEngine.dir
-  OBJECT_FILE_DIR = CMakeFiles\ChessEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles\ChessEngine.dir\src
+
+build CMakeFiles/ChessEngine.dir/src/prng.cpp.obj: CXX_COMPILER__ChessEngine_unscanned_Debug V$:/ChessEngine/src/prng.cpp || cmake_object_order_depends_target_ChessEngine
+  DEP_FILE = CMakeFiles\ChessEngine.dir\src\prng.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\ChessEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles\ChessEngine.dir\src
+
+build CMakeFiles/ChessEngine.dir/src/helper.cpp.obj: CXX_COMPILER__ChessEngine_unscanned_Debug V$:/ChessEngine/src/helper.cpp || cmake_object_order_depends_target_ChessEngine
+  DEP_FILE = CMakeFiles\ChessEngine.dir\src\helper.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\ChessEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles\ChessEngine.dir\src
 
 
 # =============================================================================
@@ -69,7 +81,7 @@ build CMakeFiles/ChessEngine.dir/bitboard.cpp.obj: CXX_COMPILER__ChessEngine_uns
 #############################################
 # Link the executable ChessEngine.exe
 
-build ChessEngine.exe: CXX_EXECUTABLE_LINKER__ChessEngine_Debug CMakeFiles/ChessEngine.dir/main.cpp.obj CMakeFiles/ChessEngine.dir/bitboard.cpp.obj
+build ChessEngine.exe: CXX_EXECUTABLE_LINKER__ChessEngine_Debug CMakeFiles/ChessEngine.dir/main.cpp.obj CMakeFiles/ChessEngine.dir/src/bitboard.cpp.obj CMakeFiles/ChessEngine.dir/src/prng.cpp.obj CMakeFiles/ChessEngine.dir/src/helper.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\ChessEngine.dir

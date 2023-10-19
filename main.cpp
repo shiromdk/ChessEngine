@@ -1,23 +1,22 @@
 #include <iostream>
-#include "bitboard.h"
-#include "squares.h"
-#include "Helper.h"
+#include "src/bitboard.h"
+#include "src/squares.h"
+#include "src/helper.h"
+#include "src/prng.h"
 
-#define U64 unsigned long long
 
 using namespace std;
 
 int main(){
     U64 bitboard = 0LL;
+
     auto * bitboard1 = new Bitboard(bitboard);
 
-    for(int rank = 0; rank < 8; rank++){
-        for(int file = 0; file < 8; file++){
-            int square = rank * 8 + file;
-            cout << Bitboard::countBits(bitboard1->maskRookAttacks(square)) << ",";
-        }
-        cout << endl;
-    }
+    auto * rng = new PRNG();
 
+    Bitboard::printBitboard((U64)rng->getRandomUInt32());
+    Bitboard::printBitboard((U64)rng->getRandomUInt32() & 0xFFFF);
+    Bitboard::printBitboard(rng->getRandomUInt64());
+    Bitboard::printBitboard(rng->generateMagicNumber());
     return 0;
 }

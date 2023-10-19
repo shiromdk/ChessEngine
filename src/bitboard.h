@@ -2,10 +2,12 @@
 // Created by c3131 on 18/10/2023.
 //
 
-#define U64 unsigned long long
 
 #ifndef CHESSENGINE_BITBOARD_H
 #define CHESSENGINE_BITBOARD_H
+
+#include "helper.h"
+
 class Bitboard{
 private:
     U64 bitboard;

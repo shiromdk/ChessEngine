@@ -1,10 +1,7 @@
 //
-// Created by c3131 on 19/10/2023.
+// Created by c3131 on 20/10/2023.
 //
-
-#ifndef CHESSENGINE_HELPER_H
-#define CHESSENGINE_HELPER_H
-
+#include "helper.h"
 
 const char *squareToCoord[] =  {
         "A8", "B8", "C8" ,"D8" ,"E8" ,"F8" ,"G8" ,"H8",
@@ -16,6 +13,3 @@ const char *squareToCoord[] =  {
         "A2", "B2", "C2" ,"D2" ,"E2" ,"F2" ,"G2" ,"H2",
         "A1", "B1", "C1" ,"D1" ,"E1" ,"F1" ,"G1" ,"H1",
 };
-
-
-#endif //CHESSENGINE_HELPER_H
